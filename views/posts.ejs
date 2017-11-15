@@ -1,0 +1,12 @@
+<%- include('header') %>
+
+<% posts.forEach(function (post) { %>
+  <%- include('components/post-content', { post: post }) %>
+<% }) %>
+
+<script  type="text/javascript">
+	var posts = "<%=JSON.stringify(posts)%>"
+	console.log(JSON.parse(posts))
+</script>
+
+<%- include('footer') %>
