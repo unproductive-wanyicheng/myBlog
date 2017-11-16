@@ -4,18 +4,20 @@ const session = require('express-session')
 const MongoStore = require('connect-mongo')(session)
 const flash = require('connect-flash')
 const config = require('config-lite')(__dirname)
-console.log(config)
 const routes = require('./routes')
 const pkg = require('./package')
 const winston = require('winston')
 const expressWinston = require('express-winston')
+const ejs = require('ejs')
 
 const app = express()
 
 // 设置模板目录
 app.set('views', path.join(__dirname, 'views'))
 // 设置模板引擎为 ejs
-app.set('view engine', 'ejs')
+// app.set('view engine', 'ejs')
+app.set('view engine', 'html')
+app.engine('html', ejs.renderFile)
 
 // 设置静态文件目录
 app.use(express.static(path.join(__dirname, 'public')))
@@ -42,10 +44,10 @@ app.use(require('express-formidable')({
 }))
 
 // 设置模板全局常量
-app.locals.blog = {
-  title: pkg.name,
-  description: pkg.description
-}
+// app.locals.blog = {
+//   title: pkg.name,
+//   description: pkg.description
+// }
 
 // 添加模板必需的三个变量
 app.use(function (req, res, next) {
