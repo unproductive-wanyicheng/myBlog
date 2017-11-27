@@ -6,7 +6,7 @@
        href="/posts?author=<%= user._id %>"
        data-title="<%= user.name %> | <%= ({m: '男', f: '女', x: '保密'})[user.gender] %>"
        data-content="<%= user.bio %>">
-      <img class="avatar" src="/img/<%= user.avatar %>">
+      <img class="avatar" src="<%= user.avatar %>">
     </a>
   </div>
 
@@ -24,5 +24,10 @@
     </form>
   </div>
 </div>
+
+<script type="text/javascript" charset="utf-8">
+    var a  = JSON.parse('<%- JSON.stringify(user)%>');
+    console.log(a)
+</script>
 
 <%- include('footer') %>

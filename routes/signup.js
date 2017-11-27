@@ -14,12 +14,12 @@ router.get('/', checkNotLogin, function (req, res, next) {
 
 // POST /signup 用户注册
 router.post('/', checkNotLogin, function (req, res, next) {
-  const name = req.fields.name
-  const gender = req.fields.gender
-  const bio = req.fields.bio
-  const avatar = req.files.avatar.path.split(path.sep).pop()
-  let password = req.fields.password
-  const repassword = req.fields.repassword
+  const name = req.body.name 
+  const gender = req.body.gender
+  const bio = req.body.bio
+  const avatar = req.body.avatar
+  let password = req.body.password
+  const repassword = req.body.repassword
 
   // 校验参数
   try {
@@ -32,7 +32,7 @@ router.post('/', checkNotLogin, function (req, res, next) {
     if (!(bio.length >= 1 && bio.length <= 30)) {
       throw new Error('个人简介请限制在 1-30 个字符')
     }
-    if (!req.files.avatar.name) {
+    if (!avatar) {
       throw new Error('缺少头像')
     }
     if (password.length < 6) {
@@ -43,7 +43,7 @@ router.post('/', checkNotLogin, function (req, res, next) {
     }
   } catch (e) {
     // 注册失败，异步删除上传的头像
-    fs.unlink(req.files.avatar.path)
+    // fs.unlink(req.files.avatar.path)
     req.flash('error', e.message)
     return res.redirect('/signup')
   }
@@ -74,7 +74,7 @@ router.post('/', checkNotLogin, function (req, res, next) {
     })
     .catch(function (e) {
       // 注册失败，异步删除上传的头像
-      fs.unlink(req.files.avatar.path)
+      // fs.unlink(req.files.avatar.path)
       // 用户名被占用则跳回注册页，而不是错误页
       if (e.message.match('duplicate key')) {
         req.flash('error', '用户名已被占用')

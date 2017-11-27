@@ -1,8 +1,8 @@
 <%- include('header') %>
 
 <div class="ui grid">
-  <div class="four wide column"></div>
-  <div class="eight wide column">
+  <div class=""></div>
+  <div class="signup-form-wrapper">
     <form class="ui form segment" method="post" enctype="multipart/form-data">
       <div class="field required">
         <label>用户名</label>
@@ -26,7 +26,8 @@
       </div>
       <div class="field required">
         <label>头像</label>
-        <input type="file" name="avatar">
+        <input type="file" class="upload-avator">
+        <input type="text" name="avatar" style="display: none">
       </div>
       <div class="field required">
         <label>个人简介</label>
@@ -36,5 +37,49 @@
     </form>
   </div>
 </div>
+
+<script  type="text/javascript">
+    var avatar = '';
+    $(".upload-avator").on('change', function(e){
+        var file = this.files[0];
+        var r = new FileReader();  //本地预览
+        r.onload = function(e){
+           avatar = e.target.result;
+           $('input[name="avatar"]').val(avatar);
+        }
+        r.readAsDataURL(file);    //Base64
+    })
+    // $('#sign-submit').click(function(){
+    //     var name = $('.signup-name').val();
+    //     var password = $('.signup-password').val();
+    //     var repassword = $('.signup-repassword').val();
+    //     var gender = $('.selection').find("option:selected").val();
+    //     var bio = $('.signup-desc').val();
+    //     var params = {
+    //         name: name,
+    //         password: password,
+    //         repassword: repassword,
+    //         gender: gender,
+    //         bio: bio,
+    //         avatar: avatar
+    //     }
+
+    //     $.ajax({
+    //         type: 'POST',
+    //         url: '/signup',
+    //         data: params,
+    //         success: function(res) {
+    //             console.log(res)
+    //         },
+    //         dataType: 'json',
+    //         // contentType: "application/json; charset=utf-8"
+    //     });
+    // })
+    // var submitBtn = $('.segment');
+    // submitBtn.submit(function(e){
+    //     return true;
+    // })
+
+</script>
 
 <%- include('footer') %>

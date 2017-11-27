@@ -22,8 +22,8 @@ router.get('/', function (req, res, next) {
 // POST /posts 发表一篇文章
 router.post('/', checkLogin, function (req, res, next) {
   const author = req.session.user._id
-  const title = req.fields.title
-  const content = req.fields.content
+  const title = req.body.title
+  const content = req.body.content
 
   // 校验参数
   try {
@@ -109,8 +109,8 @@ router.get('/:postId/edit', checkLogin, function (req, res, next) {
 router.post('/:postId/edit', checkLogin, function (req, res, next) {
   const postId = req.params.postId
   const author = req.session.user._id
-  const title = req.fields.title
-  const content = req.fields.content
+  const title = req.body.title
+  const content = req.body.content
 
   PostModel.updatePostById(postId, author, { title: title, content: content })
     .then(function () {
@@ -139,7 +139,7 @@ router.get('/:postId/remove', checkLogin, function (req, res, next) {
 router.post('/:postId/comment', checkLogin, function (req, res, next) {
   const author = req.session.user._id
   const postId = req.params.postId
-  const content = req.fields.content
+  const content = req.body.content
   const comment = {
     author: author,
     postId: postId,
